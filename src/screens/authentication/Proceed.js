@@ -49,7 +49,7 @@ class Proceed extends Component {
 									style={{ width: 35, height: 35, marginLeft: 10, marginTop: 5 }} />
 								<TextInput
 									style={styles.inputText}
-									placeholder="Username"
+									placeholder="Phone Number"
 									onChangeText={data => this.setState({ phone_number: data })}
 									value={this.state.phone_number}
 								/>
@@ -59,7 +59,7 @@ class Proceed extends Component {
 									style={{ width: 30, height: 30, marginLeft: 10, marginTop: 7 }} />
 								<TextInput
 									style={styles.inputText}
-									placeholder="Email"
+									placeholder="Location"
 									onChangeText={data => this.setState({ location_id: data })}
 									value = {this.state.location_id}
 								/>
@@ -69,8 +69,7 @@ class Proceed extends Component {
 									style={{ width: 35, height: 35, marginLeft: 10, marginTop: 5 }} />
 								<TextInput
 									style={styles.inputText}
-									secureTextEntry={true}
-									placeholder="Password"
+									placeholder="Link Facebook"
 									onChangeText={data => this.setState({ link_facebook: data })}
 									value={this.state.link_facebook}
 								/>

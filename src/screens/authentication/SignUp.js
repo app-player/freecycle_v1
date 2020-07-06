@@ -30,10 +30,7 @@ class Registration extends Component {
 		};
 		axios.post('http://127.0.0.1:8000/api/register', data, headers)
 		.then(res => {
-					AsyncStorage.setItem("token", res.data.token)
-					.then(res => {
-						this.props.navigation.navigate('Proceed');
-					});
+					this.props.navigation.navigate('Login');
 			},
 			err => {
 					alert("Error Register");

@@ -6,6 +6,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 import AsyncStorage from '@react-native-community/async-storage';
 import Moment from 'moment';
 
+
 class Upload extends Component {
 	constructor(props){
 		super(props)
@@ -159,12 +160,14 @@ class Upload extends Component {
 
 													<Picker.Item label="Kitchen" value="1" />
         									<Picker.Item label="Clothes" value="2" />
+													<Picker.Item label="Book" value="3" />
 
 												</Picker>
                     </View>
                     <Text style={{fontWeight: 'bold', marginTop: 10}}>Upload images</Text>
 										<TouchableOpacity
 											onPress={this.handleChoosePhoto}>
+											<View style={{marginTop: 10}}>
 											<View style={styles.ImageContainer}>
 												{photo && (
 													<Image
@@ -172,7 +175,8 @@ class Upload extends Component {
 														style={styles.ImageContainer}
 													/>
 												)}
-        							</View>
+											</View>
+											</View>
 										</TouchableOpacity>
                     <TouchableOpacity style={styles.post}
 										onPress={this.post_data}>
@@ -228,9 +232,7 @@ const styles= StyleSheet.create({
 			ImageContainer: {
 				width: 120,
 				height: 120,
-				borderWidth: 1,
-				borderColor: '#B14297',
-				marginTop: 12,
+				backgroundColor: '#e0dede'
 			},
 			Image: {
 				width: 120,

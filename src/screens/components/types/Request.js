@@ -16,6 +16,37 @@ export default class Request extends Component{
 		};
 	}
 
+	deleteData = async () => {
+		Alert.alert(
+      "Delete",
+      "Do you want delete data ?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => this.setModelVisible(false),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => this.Delete() }
+      ],
+      { cancelable: false }
+    );
+	}
+	Delete = async () => {
+		const token =  await AsyncStorage.getItem("token");
+    await fetch('http://127.0.0.1:8000/api/displaypost/delete/'+ this.state.editItem.id,{
+      method: 'DELETE',
+      headers:{
+        "Authorization": "Bearer " + token,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }).then((response)=>response.json())
+    .then((responseJson)=>{
+      this.setModelVisible(false);
+    }).catch((error)=>{
+      console.error(error);
+    })
+	}
 	componentDidMount = async () => {
 		const token =  await AsyncStorage.getItem("token");
 		await fetch('http://127.0.0.1:8000/api/type/2', {
@@ -131,7 +162,8 @@ export default class Request extends Component{
 						</TouchableOpacity>
 					</View>
 					<View>
-						<TouchableOpacity style={styles.eachItem}>
+						<TouchableOpacity style={styles.eachItem}
+						onPress={() => {this.props.navigation.navigate('EditPost', {'id': this.state.editItem.id }), this.setModelVisible(false)}}>
 							<Text style={styles.changeType}>Edit status</Text>
 							<Image style={{ height: 16, width: 16, marginTop: 8 }}
 								source={require('../../../images/basic-app.png')}
@@ -147,7 +179,8 @@ export default class Request extends Component{
 						</TouchableOpacity>
 					</View>
 					<View>
-						<TouchableOpacity style={styles.eachItem}>
+						<TouchableOpacity style={styles.eachItem}
+						onPress={() => this.deleteData()}>
 							<Text style={styles.changeType}>Delete</Text>
 							<Image style={{ height: 16, width: 16, marginTop: 8 }}
 								source={require('../../../images/basic-app.png')}

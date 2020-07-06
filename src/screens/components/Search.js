@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text,TextInput, StyleSheet, TouchableOpacity,Image, FlatList} from 'react-native';
+import { View, Text,TextInput, StyleSheet, TouchableOpacity,Image, FlatList, TouchableHighlight} from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-import CardView from 'react-native-cardview';
-import { Button } from 'react-native-elements';
-import Moment from 'moment';
+import { Icon } from 'react-native-elements';
 
 class Search extends Component {
 	constructor(props){
@@ -44,18 +42,21 @@ class Search extends Component {
 	};
   render() {
     return (
-        <View>
+        <View >
             <View style={styles.container}>
-            	<View style={styles.border}>
-									<TextInput
-		 									style={styles.TextInputStyleClass}
-		 									onChangeText={(text) => this.setState({ text: text })}
-		 									value={this.state.text}
-		 									underlineColorAndroid='transparent'
-		 									placeholder="Search Here"
-									/>
-              </View>
-							<TouchableOpacity onPress={this.SearchData}><Text>Search</Text></TouchableOpacity>
+							<View style={{flexDirection:'row'}}>
+							<View style={{ width: '100%', borderWidth: 1, borderRadius: 30}}>
+							 <TextInput
+								 style={{alignItems:'center',justifyContent:'center', borderRadius: 30, paddingLeft: 10, height: 45}}
+								 onChangeText={(text) => this.setState({ text: text })}
+								 value={this.state.text}
+								 placeholder = 'Search'
+								 keyboardType = 'web-search'
+								 onSubmitEditing = {()=>{this.SearchData(); this.props.navigation.navigate('SearchData', {'data': this.state.newData, 'user': this.state.user })}}
+								 ref = 'searchBar'
+								 />
+						 </View>
+						</View>
             <Text style={styles.find}> Find by category</Text>
 						<TouchableOpacity
 							style={[styles.textBtn, {borderColor: '#F7C217',width: 50}]}
@@ -89,81 +90,6 @@ class Search extends Component {
 							<Text style={[styles.TextStyle,{color: '#97CACA'}]}>Request</Text>
 						</TouchableOpacity>
             </View>
-						<View>
-						<FlatList
-							data={this.state.newData}
-							keyExtractor={(item) => item.id.toString()}
-							enableEmptySections={true}
-							renderItem={({ item }) => (
-								<CardView cardElevation={4}
-													onPress={() => alert(item.id)}
-													maxCardElevation={4}
-													radius={2}
-													marginTop={8}>
-													<View style={{ padding: 18, width: '100%', textAlign: 'center', paddingBottom: 30 }}>
-															<View style={styles.headerContain}>
-																<View style={styles.headerLeft}>
-																		<View style={{flexDirection: 'row', textAlign: 'center'}}>
-																			<View>
-																				<Text style={styles.username}>{item.user.username}</Text>
-																				<Text style={styles.date}>{Moment(item.created_at).format('d MMM yyyy')}</Text>
-																			</View>
-																			<View style={{justifyContent: 'center'}}>
-																				{item.type.type_name === 'Offer' ? (
-																					<Image source={require('../../images/ColorType/type.png')}  style={{ marginLeft: 10, marginBottom: 12 }}/>
-																				):
-																				(
-																					<Image source={require('../../images/ColorType/type_2.png')}  style={{ marginLeft: 10, marginBottom: 12 }}/>
-																				)
-																				}
-																			</View>
-																		</View>
-																</View>
-																<View style={styles.headerRight}>
-																		{item.type.type_name === 'Offer' ?
-																				this.state.user.username === item.user.username ? (
-																				<TouchableOpacity onPress={()=>{this.clickEvent(item)}}>
-																					<Text style={[styles.type, {color: '#F7C217'}]}>Edit</Text>
-																				</TouchableOpacity>
-																			):
-																			(
-																				<Text style={[styles.type, {color: '#F7C217'}]}>{item.type.type_name}</Text>
-																			)
-																			:
-																				this.state.user.username === item.user.username ? (
-																				<TouchableOpacity onPress={()=>{this.clickEvent(item)}}>
-																					<Text style={[styles.type, {color: '#97CACA'}]}>Edit</Text>
-																				</TouchableOpacity>
-																			):
-																			(
-																				<Text style={[styles.type, {color: '#97CACA'}]}>{item.type.type_name}</Text>
-																			)
-																		}
-																		<Text style={styles.category}>{item.category.category_name}</Text>
-																 </View>
-															</View>
-															<View style={styles.imageContainer}>
-																 <View style={styles.titleContain}>
-																		<Text style={styles.title}>{item.title}</Text>
-																 </View>
-																 <View style={styles.imageContain}>
-																		<Image style={styles.image} source={{ uri: item.image_url }}/>
-																 </View>
-																 <View style={styles.TextContain}>
-																		<TextInput
-																			style={styles.TextInputStyle}
-																			placeholder="Write a message here"
-																		/>
-																		<Button
-																			buttonStyle={styles.sentContain}
-																			icon={{name: 'send', type: 'material icon'}} />
-																 </View>
-															</View>
-													</View>
-								 </CardView>
-							)}
-						/>
-						</View>
         </View>
       );
    }
