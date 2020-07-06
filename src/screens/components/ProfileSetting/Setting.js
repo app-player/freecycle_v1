@@ -9,12 +9,37 @@ class Setting extends Component{
 		await AsyncStorage.clear();
     this.props.navigation.navigate('Auth');
   };
+	constructor(props){
+		super(props)
+		this.state ={
+			user: []
+		}
+	}
+	componentDidMount = async () => {
+		this.GetDataUser();
+	}
+	GetDataUser = async () => {
+		const token =  await AsyncStorage.getItem("token");
+		await fetch('http://127.0.0.1:8000/api/user', {
+			method: 'GET',
+			headers: {
+				"Authorization": "Bearer " + token
+			}
+		}).then((response) => response.json())
+		.then((responseJson) => {
+			this.setState({
+					user: responseJson.user
+		})
+		}).catch((error) => {
+				console.error(error);
+		});
+	}
   render(){
     return (
       <View>
         <ScrollView>
         <View style={styles.container}>
-        <Text style={styles.textName}>xxjoanne</Text>
+        <Text style={styles.textName}>{this.state.user.username}</Text>
           <View style={styles.regionText}>
             <Text style={{fontSize: 13, fontFamily: 'Montserrat-Regular'}}>Phnom Penh</Text>
             <Text>,</Text>

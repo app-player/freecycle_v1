@@ -43,7 +43,7 @@ class Proceed extends Component {
 				<View style={styles.container}>
 					<ImageBackground source={require('../../images/login.png')} style={styles.image}>
 						<View style={{ alignItems: "center", justifyContent: "center" }}>
-							<Text style={{ textAlign: 'center', fontSize: 25, fontFamily: 'Montserrat-Bold', marginTop: 40, marginBottom: 15 }}>Registration</Text>
+							<Text style={{ textAlign: 'center', fontSize: 25, fontFamily: 'Montserrat-Bold', marginTop: 40, marginBottom: 15 }}>Proceed</Text>
 							<View style={styles.border}>
 								<Image source={{ uri: 'https://www.flaticon.com/premium-icon/icons/svg/1144/1144760.svg' }}
 									style={{ width: 35, height: 35, marginLeft: 10, marginTop: 5 }} />
@@ -79,11 +79,6 @@ class Proceed extends Component {
 									Proceed
 								</Text>
 							</TouchableOpacity>
-							<View style={styles.login}><Text style={{ color: '#B14297', fontFamily: 'Montserrat-Bold' }}> Have an account?</Text>
-								<TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
-									<Text style={{ color: '#B14297', fontFamily: 'Montserrat-Bold' }}> Login</Text>
-								</TouchableOpacity>
-							</View>
 						</View>
 					</ImageBackground>
 				</View>

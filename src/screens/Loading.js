@@ -8,7 +8,7 @@ export default class Loading extends Component {
     checkToken = async() => {
         const token = await AsyncStorage.getItem('token');
         if(token){
-					this.props.navigation.navigate('App');
+					this.props.navigation.navigate('Proceed');
 				}
 				else{
 					this.props.navigation.navigate('Auth');
