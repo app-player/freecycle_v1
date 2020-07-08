@@ -13,6 +13,7 @@ import Home from './components/Home';
 import Search from './components/Search';
 import Upload from './components/Upload';
 import Chat from './components/Chat';
+import EachChat from './components/EachChat';
 import Profile from './components/Profile';
 //search
 import SearchData from './components/DataSearch';
@@ -119,6 +120,10 @@ const ChatStack = createStackNavigator({
 			headerStyle: { backgroundColor: '#F7C217' },
 		}
 	},
+	EachChat: EachChat,
+},{
+	headerMode: "none",
+	initialRouteName: 'EachChat',
 })
 const ProfileStack = createStackNavigator({
 	Profile: {

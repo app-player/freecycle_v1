@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet,Button,TouchableOpacity, Image } from 'react-native';
+import { View, Text, TextInput, StyleSheet,Button,TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {Picker} from '@react-native-community/picker';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -38,7 +38,6 @@ class Upload extends Component {
 			});
 			})
 			.catch((error) => {
-	    	console.error(error);
 			});
 	}
 
@@ -98,9 +97,14 @@ class Upload extends Component {
 				{ name: 'category_id', data: this.state.category_id.toString() },
 
 			]).then((resp) => {
-				 this.props.navigation.navigate('Profile');
+				this.setState({
+					isLoading: true
+				});
+				this.props.navigation.navigate('Profile');
 			}).catch((err) => {
-				console.log(err.message);
+				this.setState({
+					isLoading: false
+				})
 			})
 	}
 	post_data = () => {

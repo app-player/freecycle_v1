@@ -99,7 +99,7 @@ export default class EachChat extends Component {
                             />
                             <TouchableOpacity>
                                 <Image style={{ height: 36, width: 36, marginTop: 20, marginRight: 22 }}
-                                    source={require('../images/send.png')}
+                                    source={require('../../images/send.png')}
                                 />
                             </TouchableOpacity>
                         </View>
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat-Regular',
         fontSize: 11,
         marginBottom: 5,
-        textAlign: 'right', 
+        textAlign: 'right',
         alignSelf: 'stretch'
     },
     itemDateOther: {

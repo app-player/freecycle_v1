@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { View, Text, Image, ImageBackground, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native'
+import React, { Component, useContext } from 'react'
+import { View, Text, Image, ImageBackground, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
 class Registration extends Component {
@@ -12,59 +13,35 @@ class Registration extends Component {
       password: ''
     }
   }
-	FunctionRegister = () => { 
-		axios.post('http://127.0.0.1:8000/api/register', {
-            username: this.state.username,
-            email: this.state.email.toLowerCase(),
-            password: this.state.password,
-        })
-        .then((response)=>{
-          this.props.navigation.navigate('Login');
-        })
-        .catch(error=> {
-         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-            if(this.state.username&&this.state.email&&this.state.password)
-            {
-              if(reg.test(this.state.email)===false && this.state.password.length<=5){
-              this.setState({msg:'The email and password invalid!'});
-               }
-               else{
-                 if(this.state.password.length<=5){
-                  this.setState({msg:'The password invalid!'});
-                 }
-                 else{
-                  this.setState({msg:'The email invalid!'});
-                 }
-               }
-            }
-            else
-            {
-              if(this.state.username.length<=0&&this.state.email.length<=0&&this.state.password.length<=0){
-                this.setState({msg:'Please enter the username email and password'});
-              }
-              else{
-                if(this.state.username.length<=0){
-                  this.setState({msg:'Please enter the username!'});
-                }
-                else{
-                  if(this.state.email.length<=0){
-                    this.setState({msg:'Please enter the email!'});
-                  }
-                  else{
-                    this.setState({msg:'Please enter the password!'});
-                  }
-                }
-              }
-            }
-        });
+
+	FunctionRegister = () => {
+		const username = this.state.username;
+		const email = this.state.email;
+		const password = this.state.password;
+		const data = {
+				'username': username,
+				'email': email,
+				'password': password,
+		};
+		const headers = {
+				headers: {
+						'Content-Type': 'application/json',
+				}
+		};
+		axios.post('http://127.0.0.1:8000/api/register', data, headers)
+		.then(res => {
+					this.props.navigation.navigate('Login');
+			},
+			err => {
+					alert("Error Register");
+			})
   }
   render() {
     return (
       <View style={styles.container}>
         <ImageBackground source={require('../../images/login.png')} style={styles.image}>
           <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <Text style={{ textAlign: 'center', fontSize: 25, fontFamily: 'Montserrat-Bold', marginTop: 40}}>Registration</Text>
-            <Text style={{color: 'red', fontFamily: 'Montserrat-Regular'}}>{this.state.msg}</Text>
+            <Text style={{ textAlign: 'center', fontSize: 25, fontFamily: 'Montserrat-Bold', marginTop: 40, marginBottom: 15 }}>Registration</Text>
             <View style={styles.border}>
               <Image source={{ uri: 'https://www.flaticon.com/premium-icon/icons/svg/1144/1144760.svg' }}
                 style={{ width: 35, height: 35, marginLeft: 10, marginTop: 5 }} />

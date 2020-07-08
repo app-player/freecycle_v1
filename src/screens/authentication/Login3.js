@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useContext } from 'react';
 import { View, Text,Image,ImageBackground, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -15,7 +15,7 @@ class Login extends Component {
 		const email = this.state.email;
 		const password = this.state.password;
 		const data = {
-				'email': email.toLowerCase(),
+				'email': email,
 				'password': password,
 		}
 		const headers = {
@@ -25,30 +25,13 @@ class Login extends Component {
 		};
 		await axios.post('http://127.0.0.1:8000/api/login', data, headers)
 		.then(res => {
-      console.log(res.data.token);
 					AsyncStorage.setItem("token", res.data.token)
 					.then(res => {
 						this.props.navigation.navigate('App');
 					});
 			},
 			err => {
-					if(email.length<=0&&password.length<=0){
-
-            this.setState({msg:'Please enter the email and password'});
-          }
-          else{
-            if(email.length<=0){
-              this.setState({msg:'Please enter the email!'});
-            }
-            else{
-              if(password.length<=0){
-              this.setState({msg:'Please enter the password!'});
-              }
-              else{
-                this.setState({msg:'Your email or password incorrect!'});
-              }
-            }
-          }
+					alert("username and password is worng");
 			})
 	}
   render() {
@@ -56,8 +39,7 @@ class Login extends Component {
       <View style={styles.container}>
       <ImageBackground source={require('../../images/login.png')} style={styles.image}>
         <View style={{alignItems: "center", justifyContent: "center"}}>
-        <Text style={{textAlign: 'center', fontSize: 25, fontFamily: 'Montserrat-Bold',marginTop: 60,marginBottom:5}}>Login</Text>
-        <Text style={{color: 'red', fontFamily: 'Montserrat-Regular'}}>{this.state.msg}</Text>
+        <Text style={{textAlign: 'center', fontSize: 25, fontFamily: 'Montserrat-Bold',marginTop: 60,marginBottom:15}}>Login</Text>
       <View style={styles.border}>
                   <Image source = {{uri:'https://www.flaticon.com/premium-icon/icons/svg/1144/1144760.svg'}}
                   style = {{ width: 35,height:35, marginLeft: 10, marginTop: 5}}/>
@@ -80,7 +62,6 @@ class Login extends Component {
 
                   />
                 </View>
-                <Text style={{color: 'red', fontFamily: 'Montserrat-Regular'}}>{this.state.msgp}</Text>
                 <TouchableOpacity style={styles.button} onPress={this.FunctionLogin}>
                     <Text style = {styles.signup}>
                         Login
@@ -131,7 +112,7 @@ export default Login
       borderRadius: 30,
       backgroundColor: '#F7C217',
       fontFamily: 'Montserrat-Bold',
-     // marginTop: 0,
+      marginTop: 15,
       textAlign: 'center',
     },
     loginwithfacebook: {
